@@ -32,105 +32,8 @@ env:
 # Defines the list of jobs
 # --------------------------------------------
 jobs:
-  # --------------------------------------------
-  # Verify Job
-  #---------------------------------------------
-  verify:
-    name: Verify
-    runs-on: ubuntu-18.04
-    
-    steps:
-      # --------------------------------------------
-      # Checks out a copy of the repository
-      # --------------------------------------------
-      - name: Checkout code
-        uses: actions/checkout@v2
-        
-      # --------------------------------------------
-      # Run a quick sanity check if all commits are
-      # handed in by known users
-      #---------------------------------------------
-      - name: Verify - Authors Sanity Check
-        uses: virtualsatellite/ci-actions/ci-verify-authors-action@master
-          
-  # -----------------------------------------------------
-  # Build and Test - SpotBugs Job
-  # -----------------------------------------------------
-  spotbugs:
-    name: Build and Test - Spotbugs
-    runs-on: ubuntu-18.04
-    needs: [verify]
+ 
 
-    steps:
-      # --------------------------------------------
-      # Checks out a copy of the repository
-      # --------------------------------------------
-      - name: Checkout code
-        uses: actions/checkout@v2
-      
-      # --------------------------------------------
-      # Setup caching for m2 repository
-      # --------------------------------------------
-      - name: Cache local Maven repository
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository/
-          key: ${{ runner.os }}-local-maven-spotbugs-${{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-local-maven-spotbugs-
-            ${{ runner.os }}-local-maven-
-
-      # --------------------------------------------
-      # Perform various setup operations
-      # --------------------------------------------
-      - name: Build - Setup
-        uses: virtualsatellite/ci-actions/ci-setup-action@master
-
-     
-
-  # -----------------------------------------------------
-  # Build and Test - Surefire Job
-  # -----------------------------------------------------
-  surefire:
-    name: Build and Test - Surefire
-    runs-on: ubuntu-18.04
-    needs: [verify]
-
-    steps:
-      # --------------------------------------------
-      # Checks out a copy of your repository
-      # --------------------------------------------
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      # --------------------------------------------
-      # Setup caching for m2 repository
-      # --------------------------------------------
-      - name: Cache local Maven repository
-        uses: actions/cache@v2
-        with:
-          path: ~/.m2/repository/
-          key: ${{ runner.os }}-local-maven-surefire-{{ hashFiles('**/pom.xml') }}
-          restore-keys: |
-            ${{ runner.os }}-local-maven-surefire-
-            ${{ runner.os }}-local-maven-
-
-      # --------------------------------------------
-      # Perform various setup operations
-      # --------------------------------------------
-      - name: Build - Setup
-        uses: virtualsatellite/ci-actions/ci-setup-action@master
-
-      # --------------------------------------------
-      # Upload SWTBout screenshots to github artifacts
-      # --------------------------------------------
-      - name: Upload SWTBot Screenshots on Failure
-        if: ${{ failure() }}
-        uses: actions/upload-artifact@v2
-        with:
-          name: SWTBot Screenshots
-          path: 
-            swtbot/*
 
   # -----------------------------------------------------
   # Build and Test - Checkstyle Job
@@ -138,7 +41,6 @@ jobs:
   checkstyle:
     name: Build and Test - Checkstyle
     runs-on: ubuntu-18.04
-    needs: [verify]
 
     steps:
       # --------------------------------------------
@@ -171,12 +73,6 @@ jobs:
       - name: Build - Build and Deploy Decision
         id: build_decision
         uses: virtualsatellite/ci-actions/ci-build-decision-action@master
-        
-      - name: Build - Report build Decision
-        run: |
-          echo Build-Type: ${{ steps.build_decision.outputs.build_type }}
-          echo Deploy Type: ${{ steps.build_decision.outputs.deploy_type }}
-         
 
       # --------------------------------------------
       # Development and Feature branches
