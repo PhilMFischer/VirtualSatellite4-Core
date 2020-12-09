@@ -87,7 +87,7 @@ while [ "$1" != "" ]; do
 done
 
 # Setup ssh with sourceforge secrets
-sourceforgeDecryptSecret
+sourceforgeDecryptSecret 
 
 # Decide what to upload
 case $UPLOAD in
