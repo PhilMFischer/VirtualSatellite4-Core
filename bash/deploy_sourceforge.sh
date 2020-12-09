@@ -22,7 +22,7 @@ COMMAND=$0
 printUsage() {
     echo "usage: ${COMMAND} -u [development|integration|release]"
 }
-
+ 
 setupSourceforgeSecrets() {
 	# Start the ssh agent
 	echo "Starting ssh-agent"
