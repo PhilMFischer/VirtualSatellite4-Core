@@ -132,7 +132,7 @@ jobs:
       # Deploying to github releases
       # --------------------------------------------
       - name: Build - Deploy
-        uses: virtualsatellite/ci-actions/ci-deploy-gh-action@master
+        uses: virtualsatellite/ci-actions/ci-deploy-gh-product-action@master
         with:
           build_profile: ${{ steps.build_decision.outputs.build_type }}
         if: ${{ steps.build_decision.outputs.deploy_type == 'deploy'  }}
