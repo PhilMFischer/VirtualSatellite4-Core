@@ -16,7 +16,7 @@
 
 # Store the name of the command calling from commandline to be properly
 # displayed in case of usage issues
-COMMAND=$0
+COMMAND=$0 
 
 # this method gives some little usage info
 printUsage() {
