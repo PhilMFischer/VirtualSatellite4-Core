@@ -94,6 +94,12 @@ jobs:
       - name: Setup - Checkout code
         uses: actions/checkout@v2
 
+      - name: Build - Early deploy test 
+        uses: virtualsatellite/ci-actions/ci-deploy-gh-product-action@master
+        with:
+          build_profile: ${{ steps.build_decision.outputs.build_type }}
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
+        
       # --------------------------------------------
       # Setup caching for m2 repository
       # --------------------------------------------
