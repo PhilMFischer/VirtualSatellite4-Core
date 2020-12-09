@@ -135,6 +135,7 @@ jobs:
         uses: virtualsatellite/ci-actions/ci-deploy-gh-product-action@master
         with:
           build_profile: ${{ steps.build_decision.outputs.build_type }}
-        if: ${{ steps.build_decision.outputs.deploy_type == 'deploy'  }}
+          gh_token: ${{ secrets.GITHUB_TOKEN }}
+        if: ${{ steps.build_decision.outputs.deploy_type == 'deploy' }}
 
     
